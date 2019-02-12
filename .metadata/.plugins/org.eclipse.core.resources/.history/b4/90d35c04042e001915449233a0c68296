@@ -1,0 +1,19 @@
+package m1miage;
+import java.io.File;
+
+public class Exercice1 {
+	
+	public void question1() {
+		File fichier1 = new File(".");
+		String[] fichiers = fichier1.list(); 
+		for (String fichier : fichiers) {
+			System.out.print(fichier);
+		}
+	}
+	
+	public static void main(String[] args) {
+		Exercice1 Ex1 = new Exercice1();
+		Ex1.question1();
+	}
+
+}  

@@ -1,9 +1,0 @@
-package m1miage;
-import java.lang.reflect.*;
-import java.io.*;
-
-public class toStringGeneric {
-
-	
-	
-}

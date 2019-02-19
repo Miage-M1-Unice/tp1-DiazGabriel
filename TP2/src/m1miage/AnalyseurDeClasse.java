@@ -6,8 +6,8 @@ public class AnalyseurDeClasse {
 
   public static void analyseClasse(String nomClasse) throws ClassNotFoundException {
     // Récupération d'un objet de type Class correspondant au nom passé en paramètres
-    Class cl = getClasse(nomClasse);
-
+    Class cl = getClasse(nomClasse); 
+	  
     afficheEnTeteClasse(cl);
 
     System.out.println();
@@ -25,12 +25,8 @@ public class AnalyseurDeClasse {
 
 
   /** Retourne la classe dont le nom est passé en paramètre */
-  public static Class getClasse(String nomClasse) throws ClassNotFoundException {
-    //Class c1 = Class.forName(nomClasse);
-	//Class c1 = String.class;
-	Class c1 = new String(nomClasse).getClass();
-    
-    return(c1);
+  public static Class getClasse(String nomClasse) throws ClassNotFoundException {    
+    return Class.forName(nomClasse);
   }
 
   /** Cette méthode affiche par ex "public class Toto extends Tata implements Titi, Tutu {" */
@@ -39,6 +35,7 @@ public class AnalyseurDeClasse {
     //  Affichage du modifier et du nom de la classe
 	int i = cl.getModifiers();
 	entete = Modifier.toString(i);
+	entete += " class "; 
     entete += cl.getName();
    // Récupération de la superclasse si elle existe (null si cl est le type Object)
     Class supercl = cl.getSuperclass();
@@ -56,55 +53,93 @@ public class AnalyseurDeClasse {
     	entete += " implements ";
     	for (int j=0; j<interfaces.length; j++) {
     		entete += interfaces[j].toString();
+    		if (j<interfaces.length-1) {
+    			entete += " ,";
+    		}
     	}
     }
-    
-    System.out.println(entete);
     // Enfin, l'accolade ouvrante !
-    System.out.print(" {\n");
+    entete += " {";    
+    System.out.println(entete);
   }
 
   public static void afficheAttributs(Class cl) {
-    Field[] champs = cl.getFields();
+    Field[] champs = cl.getDeclaredFields();
+    int fieldsModifier;
+    String displayChamp;
     
     if (champs.length == 0) {
-    	System.out.println("Cette classe ne contient pas d'attribut");
+    	System.out.println("*****Cette classe ne contient pas de champs*****");
     } else {
-    	System.out.println("Liste des attributs :");
+    	System.out.println("*****Champs*****");
     	for(int i=0; i<champs.length; i++) {
-    		if (champs[i].getName() != champs[i-1].getName()) {
-    			System.out.println(champs[i].getName());
-    		}
+    		fieldsModifier = champs[i].getModifiers();
+    		displayChamp = Modifier.toString(fieldsModifier) +" "+ champs[i].getType() +" "+ champs[i].getName();
+    		displayChamp += ";";
+        	System.out.println(displayChamp); 
     	}
+    	   
     }
   }
 
   public static void afficheConstructeurs(Class cl) {
-    Constructor[] constructeurs = cl.getConstructors();
+    Constructor[] constructeurs = cl.getDeclaredConstructors();
+    int constructorModifier;
+    String displayConstructeur;
     
     if (constructeurs.length == 0) {
-    	System.out.println("Cette classe ne contient pas de constructeurs");
+    	System.out.println("*****Cette classe ne contient pas de constructeurs*****");
     } else { 
-    	System.out.println("Liste des constructeurs :");
+    	System.out.println("*****Liste des constructeurs*****");
     	for(int i=0; i< constructeurs.length; i++) {
-    		if (constructeurs[i].getName() != constructeurs[i-1].getName()) {
-        		System.out.println(constructeurs[i].getName());
+    		constructorModifier = constructeurs[i].getModifiers();
+    		Parameter[] parametres = constructeurs[i].getParameters();
+    		displayConstructeur = Modifier.toString(constructorModifier) +" "+ constructeurs[i].getName();
+    		if (parametres.length != 0) {
+				displayConstructeur += "(";
+    			for(int j=0; j<parametres.length; j++) {
+    				displayConstructeur += parametres[j].getParameterizedType();
+    				if (j<parametres.length-1) {
+    					displayConstructeur += ", ";
+    				}
+    			}
+    			displayConstructeur += ")";
+    		} else {
+    			displayConstructeur += "()";
     		}
+    		displayConstructeur += ";";
+    		System.out.println(displayConstructeur);
     	}
-    }
-  }
+    }   	
+ }
   
   public static void afficheMethodes(Class cl) {
-    Method[] methodes = cl.getMethods();
+    Method[] methodes = cl.getDeclaredMethods();
+    int methodModifier;
+    String displayMethode;
     
     if (methodes.length == 0) {
-    	System.out.println("Cette classe ne contient méthode");
+    	System.out.println("*****Cette classe ne contient méthode*****");
     } else {
-    	System.out.println("Liste des méthodes :");
+    	System.out.println("*****Liste des méthodes*****");
     	for(int i=0; i< methodes.length; i++) {
-    		if (methodes[i].getName() != methodes[i-1].getName()) {
-    			System.out.println(methodes[i].getName());
+    		methodModifier = methodes[i].getModifiers();
+    		Parameter[] parametres = methodes[i].getParameters();
+    		displayMethode = Modifier.toString(methodModifier) +" "+ methodes[i].getGenericReturnType() +" "+ methodes[i].getName();
+    		if (parametres.length != 0) {
+				displayMethode += "(";
+    			for(int j=0; j<parametres.length; j++) {
+    				displayMethode += parametres[j].getParameterizedType();
+    				if (j<parametres.length-1) {
+    					displayMethode += ", ";
+    				}
+    			}
+    			displayMethode += ")";
+    		} else {
+    			displayMethode += "()";
     		}
+    		displayMethode +=";";
+    		System.out.println(displayMethode);
     	}
     }
   }
@@ -122,7 +157,7 @@ public class AnalyseurDeClasse {
         System.out.print("Entrez le nom d'une classe (ex : java.util.Date): ");
         String nomClasse = litChaineAuClavier();
         
-        AnalyseurDeClasse.analyseClasse(nomClasse);
+        analyseClasse(nomClasse);
 
         ok = true;
       } catch(ClassNotFoundException e) {

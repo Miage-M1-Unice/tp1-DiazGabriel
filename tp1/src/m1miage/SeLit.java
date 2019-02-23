@@ -9,7 +9,7 @@ public class SeLit {
 	    		SeLit source = new SeLit();
 	    		Scanner path = new Scanner(new File("./src/m1miage/SeLit.java"));
 	    		source.lecture(path);
-	    	} catch (FileNotFoundException e) {
+	    	} catch	(FileNotFoundException e) {
 	    		System.err.println("Fichier non trouvé");
 	    	}
 	    }

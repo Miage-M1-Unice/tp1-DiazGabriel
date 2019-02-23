@@ -10,7 +10,8 @@ public class Exercice1a {
 		Ex1.question2a(fichier);
 		String flter = ".class";
 		filtre EX1C = new filtre(flter);
-		EX1C.filtreDossier(fichier, EX1C.ext);
+//Le filtre ne fonctionne pas correctement
+		//EX1C.filtreDossier(fichier, EX1C.ext);
 		
 	}
 	

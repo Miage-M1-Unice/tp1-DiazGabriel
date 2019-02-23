@@ -1,0 +1,81 @@
+java.util.Scanner[delimiters=\p{javaWhitespace}+][position=0][match valid=false][need input=false][source closed=false][skipped=false][group separator=\ ][decimal separator=\,][positive prefix=][negative prefix=\Q-\E][positive suffix=][negative suffix=][NaN string=\Q?\E][infinity string=\Q?\E]
+LU:package m1miage;
+package m1miage;
+LU:
+
+LU:import java.io.*;
+import java.io.*;
+LU:import java.util.Scanner; 
+import java.util.Scanner; 
+LU:
+
+LU:public class SeLit {
+public class SeLit {
+LU:	static public void main(String[] args) {   
+	static public void main(String[] args) {   
+LU:		PrintStream ps = System.out;
+		PrintStream ps = System.out;
+LU:        File output = new File("./text.txt");
+        File output = new File("./text.txt");
+LU:        try {
+        try {
+LU:            output.createNewFile();
+            output.createNewFile();
+LU:            System.setOut(new PrintStream(output));
+            System.setOut(new PrintStream(output));
+LU:        } catch (IOException e) {
+        } catch (IOException e) {
+LU:            e.printStackTrace();
+            e.printStackTrace();
+LU:        }
+        }
+LU:        SeLit seLitIl = new SeLit();
+        SeLit seLitIl = new SeLit();
+LU:        try {
+        try {
+LU:            Scanner chemin = new Scanner(new File("./src/m1miage/SeLit.java"));
+            Scanner chemin = new Scanner(new File("./src/m1miage/SeLit.java"));
+LU:            System.out.println(chemin.toString());
+            System.out.println(chemin.toString());
+LU:            seLitIl.lecture(chemin);
+            seLitIl.lecture(chemin);
+LU:        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
+LU:            e.printStackTrace();
+            e.printStackTrace();
+LU:        }
+        }
+LU:        System.setOut(ps);     
+        System.setOut(ps);     
+LU:	}
+	}
+LU:	
+	
+LU:	void lecture(Scanner source) {  
+	void lecture(Scanner source) {  
+LU:		  
+		  
+LU:		while(source.hasNextLine()) {  
+		while(source.hasNextLine()) {  
+LU:			String s = source.nextLine();          
+			String s = source.nextLine();          
+LU:			System.out.println("LU:"+s);  
+			System.out.println("LU:"+s);  
+LU:			if ((s.trim().contains("\"//\"") || !s.trim().startsWith("//")) &&
+			if ((s.trim().contains("\"//\"") || !s.trim().startsWith("//")) &&
+LU:					!s.trim().contains("\"//\"") && s.trim().contains("//")) {
+					!s.trim().contains("\"//\"") && s.trim().contains("//")) {
+LU:	                System.out.println(s.split("//")[0]);
+	                System.out.println(s.split("//")[0]);
+LU:	        } else {
+	        } else {
+LU:	        	System.out.println(s);
+	        	System.out.println(s);
+LU:	        }
+	        }
+LU:		}  
+		}  
+LU:	}  
+	}  
+LU:}
+}

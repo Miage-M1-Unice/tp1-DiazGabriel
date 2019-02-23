@@ -58,7 +58,6 @@ public class AnalyseurDeClasse {
     		}
     	}
     }
-    // Enfin, l'accolade ouvrante !
     entete += " {";    
     System.out.println(entete);
   }
